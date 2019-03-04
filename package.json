@@ -1,0 +1,18 @@
+{
+  "name": "lit",
+  "version": "1.0.0",
+  "description": "backend for link-tok",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ENV_FILE=.env.local pm2 --watch --no-daemon start src/index.js"
+  },
+  "repository": "https://github.com/vivek3003/lit.git",
+  "author": "vkaarthek@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "mysql2": "^1.6.5",
+    "sequelize": "^4.43.0"
+  }
+}
