@@ -11,9 +11,6 @@ const User = connection.define('user', {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
-    validate: {
-      isAlphanumeric: true,
-    },
   },
   email: {
     type: Sequelize.STRING,

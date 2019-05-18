@@ -4,22 +4,32 @@
   "description": "backend for link-tok",
   "main": "index.js",
   "scripts": {
-    "dev": "ENV_FILE=.env.local pm2 --watch --no-daemon start src/index.js"
+    "dev": "ENV_FILE=.env.local pm2 --watch --no-daemon -f start server/index.js",
+    "lint": "eslint server/*"
   },
   "repository": "https://github.com/vivek3003/lit.git",
   "author": "vkaarthek@gmail.com",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.18.0",
     "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.0",
+    "lodash": "^4.17.11",
+    "morgan": "^1.9.1",
     "mysql2": "^1.6.5",
     "passport": "^0.4.0",
     "passport-http-bearer": "^1.0.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
-    "sequelize": "^4.43.0"
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "sequelize": "^4.43.0",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.15.1"
   }
 }

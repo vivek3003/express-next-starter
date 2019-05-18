@@ -2,7 +2,6 @@ const passport = require('passport');
 const BearerStrategy = require('passport-http-bearer').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwt = require('jsonwebtoken');
 const User = require('../routes/user/model');
 
@@ -53,7 +52,7 @@ passport.use(new LocalStrategy({
   passwordField: 'password'
 }, async (email, password, done) => {
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ where: { email }});
 
     if (!user) return done(null, false, { message: 'User not found' });
 
@@ -63,14 +62,28 @@ passport.use(new LocalStrategy({
 
     return done(null, user.getPublicProfile());
   } catch(e) {
-    console.error(e);
     return done(new Error(e));
   }
 }));
 
+exports.setAuthenticationState = function(req, res, next) {
+  passport.authenticate(['bearer', 'jwt'], { session: false }, (err, user) => {
+    if (err || !user) {
+      next();
+    }
+
+    req.login(user, { session: false }, (loginError) => {
+      if (loginError) {
+        return res.status(401).send({ ok: false, m: loginError.message || 'Login Error' });
+      }
+
+      next();
+    });
+  })(req, res, next);
+}
 
 exports.isAuthenticated = function(req, res, next) {
-  passport.authenticate(['bearer', 'jwt'], { session: false }, (err, user, info, status) => {
+  passport.authenticate(['bearer', 'jwt'], { session: false }, (err, user) => {
     if (err) {
       res.status(401).send({ ok: false, m: err.message || 'Authentication Failed' });
 
