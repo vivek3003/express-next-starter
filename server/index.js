@@ -4,34 +4,45 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const logger = require('./utils/logger');
 
-// ENV
 require('dotenv').config({ path: path.resolve(__dirname, `../env/${process.env.ENV_FILE}`) });
+const next = require('next');
+
+const isDevelopmentMode = process.env.NODE_ENV !== 'production';
+const nextApp = next({ dev: isDevelopmentMode });
+const nextHandle = nextApp.getRequestHandler();
+// ENV
 
 // DB
 const connection = require('./utils/database');
 
 // APP
-const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(morgan('combined', { stream: logger.stream }));
+function createServer() {
+  const app = express();
 
-const apiRouter = require('./routes/index');
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(morgan('combined', { stream: logger.stream }));
 
-app.use('/api/', apiRouter);
+  const apiRouter = require('./routes/index');
+  const uiRouter = require('./ui/index');
 
-app.get('/', (req, res) => res.send({
-  ok: true,
-  m: 'Hello World!',
-}));
+  app.use('/api/', apiRouter);
+
+  app.use('/', uiRouter(nextApp, nextHandle));
+
+  return app;
+}
+
 
 
 async function startDevServer() {
   try {
-    await connection.authenticate();
-    app.listen(process.env.PORT, () => logger.info(`App has started on port: ${process.env.PORT}`));
+    nextApp.prepare().then(() => {
+      const app = createServer();
+      app.listen(process.env.PORT, () => logger.info(`App has started on port: ${process.env.PORT}`));
+    });
   } catch (e) {
-    logger.error('Could not connect to MySQL', e);
+    logger.error(e.message);
   }
 }
 
