@@ -4,10 +4,11 @@ const path = require('path');
 
 require('dotenv').config({ path: path.resolve(__dirname, `../env/${process.env.ENV_FILE}`) });
 
-const { STATIC_PATH } = process.env;
+const { STATIC_PATH, CURRENT_LANG } = process.env;
 
 module.exports = _.merge({}, withSass(), {
   publicRuntimeConfig: {
     STATIC_PATH,
+    CURRENT_LANG,
   },
 });

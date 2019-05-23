@@ -1,11 +1,12 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
-const logger = require('./utils/logger');
+const next = require('next');
 
 require('dotenv').config({ path: path.resolve(__dirname, `../env/${process.env.ENV_FILE}`) });
-const next = require('next');
+const logger = require('./utils/logger');
 
 const isDevelopmentMode = process.env.NODE_ENV !== 'production';
 const nextApp = next({ dev: isDevelopmentMode });
@@ -21,9 +22,12 @@ function createServer() {
 
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(cookieParser());
   app.use(morgan('combined', { stream: logger.stream }));
 
+  // eslint-disable-next-line global-require
   const apiRouter = require('./routes/index');
+  // eslint-disable-next-line global-require
   const uiRouter = require('./ui/index');
 
   app.use('/api/', apiRouter);
@@ -32,7 +36,6 @@ function createServer() {
 
   return app;
 }
-
 
 
 async function startDevServer() {

@@ -1,7 +1,7 @@
 const express = require('express');
 const _ = require('lodash');
 const User = require('./model');
-const { isAuthenticated, logUserIn }  = require('../../utils/auth');
+const { isAuthenticated, logUserIn } = require('../../utils/auth');
 const logger = require('../../utils/logger');
 
 
@@ -17,10 +17,10 @@ userController.get('/me', isAuthenticated, async (req, res) => {
       ok: true,
       data: user.getPublicProfile(),
     });
-  } catch(e) {
+  } catch (e) {
     res.status(500).send({
       ok: false,
-      message: e.message || 'Internal Server Error',
+      code: 'internal_server_error',
     });
   }
 });
@@ -30,13 +30,13 @@ userController.post('/login', logUserIn);
 userController.post('/register', async (req, res) => {
   try {
     const email = _.get(req, 'body.email');
-    const userWithEmail = await User.findOne({ where: { email }});
+    const userWithEmail = await User.findOne({ where: { email } });
 
     if (!_.isEmpty(userWithEmail)) {
       return res.status(400).send({
         ok: false,
-        message: 'User with email already exists',
-        data: {userWithEmail, email},
+        code: 'email_already_exists',
+        data: { userWithEmail, email },
       });
     }
 
@@ -50,12 +50,12 @@ userController.post('/register', async (req, res) => {
       ok: true,
       data: user.getPublicProfile(),
     });
-  } catch(e) {
+  } catch (e) {
     logger.error(e);
 
     return res.status(500).send({
       ok: false,
-      m: 'Internal Server Error',
+      code: 'internal_server_error',
     });
   }
 });

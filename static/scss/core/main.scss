@@ -5,3 +5,11 @@ html, body {
   padding: 0;
   font-family: $font-family;
 }
+
+nav {
+  display: flex;
+  float: right;
+  a, span {
+    margin: 10px 15px;
+  }
+}
