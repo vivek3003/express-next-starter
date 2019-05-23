@@ -13,7 +13,7 @@ const nextHandle = nextApp.getRequestHandler();
 // ENV
 
 // DB
-const connection = require('./utils/database');
+// const connection = require('./utils/database');
 
 // APP
 function createServer() {
