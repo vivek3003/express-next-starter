@@ -1,0 +1,35 @@
+@import '../core/main.scss';
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+
+  &__logo {
+    height: 60px;
+    margin-bottom: 30px;
+  }
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    input {
+      width: 300px;
+      padding: 0 10px;
+      height: 40px;
+      border: 0;
+      outline: 0;
+      font-size: 1.2rem;
+      border-bottom: 2px solid $grey-3;
+      transition: all 0.2s ease;
+      margin-bottom: 15px;
+      &:focus {
+        border-bottom: 2px solid $brand;
+      }
+    }
+  }
+}
