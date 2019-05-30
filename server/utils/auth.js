@@ -5,7 +5,7 @@ const BearerStrategy = require('passport-http-bearer').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const jwt = require('jsonwebtoken');
-const User = require('../routes/user/model');
+const User = require('../models/user');
 
 // strategy for API Client
 passport.use(new BearerStrategy({ passReqToCallback: true }, async (req, token, cb) => {
@@ -76,7 +76,7 @@ exports.setAuthenticationState = function setAuthenticationState(req, res, next)
 
     req.login(user, { session: false }, (loginError) => {
       if (loginError) {
-        return res.status(401).send({ ok: false, code: _.toLower(_.replace(loginError.message, /[\b\s+-]+/gi, '_')) });
+        next();
       }
 
       next();
@@ -101,6 +101,30 @@ exports.isAuthenticated = function isAuthenticated(req, res, next) {
     req.login(user, { session: false }, (loginError) => {
       if (loginError) {
         return res.status(401).send({ ok: false, code: _.toLower(_.replace(loginError.message, /[\b\s+-]+/gi, '_')) });
+      }
+
+      next();
+    });
+  })(req, res, next);
+};
+
+exports.isAuthenticatedForPage = function isAuthenticatedForPage(req, res, next) {
+  passport.authenticate(['bearer', 'jwt'], { session: false }, (err, user) => {
+    if (err) {
+      res.redirect(`/login?next=${req.path}`);
+
+      return;
+    }
+
+    if (!user) {
+      res.redirect(`/login?next=${req.path}`);
+
+      return;
+    }
+
+    req.login(user, { session: false }, (loginError) => {
+      if (loginError) {
+        res.redirect(`/login?next=${req.path}`);
       }
 
       next();

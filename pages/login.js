@@ -5,7 +5,7 @@ import _ from 'lodash';
 import Cookies from 'js-cookie';
 import languages from '../lang/index';
 import { login } from '../ui/utils/api';
-import '../static/scss/pages/home.scss';
+import '../static/scss/pages/login.scss';
 
 
 const { publicRuntimeConfig } = getConfig();
@@ -33,8 +33,10 @@ const Login = ({ next = '/' }) => {
 
   return (
     <div className="login">
-      <img src={`${STATIC_PATH}/static/images/logo.svg`} alt="Logo" />
-      <form>
+      <a href="/">
+        <img src={`${STATIC_PATH}/static/images/logo.svg`} alt="Logo" className="login__logo" />
+      </a>
+      <form className="login__form">
         <input
           placeholder="email"
           type="email"
@@ -56,5 +58,9 @@ const Login = ({ next = '/' }) => {
 Login.propTypes = {
   next: PropTypes.string,
 };
+
+Login.getInitialProps = ({ query }) => ({
+  next: _.get(query, 'next', '/'),
+});
 
 export default Login;

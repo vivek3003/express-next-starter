@@ -26,9 +26,9 @@ function createServer() {
   app.use(morgan('combined', { stream: logger.stream }));
 
   // eslint-disable-next-line global-require
-  const apiRouter = require('./routes/index');
+  const apiRouter = require('./controllers/api');
   // eslint-disable-next-line global-require
-  const uiRouter = require('./ui/index');
+  const uiRouter = require('./controllers/ui');
 
   app.use('/api/', apiRouter);
 

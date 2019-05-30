@@ -1,5 +1,10 @@
 @import '../core/main.scss';
 
 .home {
-  font-size: 2em;
+  max-width: 1440px;
+  margin: 0 auto;
+
+  &__main {
+    padding: 60px;
+  }
 }

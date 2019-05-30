@@ -1,15 +1,129 @@
 @import '../core/variables.scss';
+@mixin in-mobile() {
+  @media all and (max-width: 720px) {
+    @content;
+  }
+}
 
 html, body {
   margin: 0;
   padding: 0;
   font-family: $font-family;
+  font-size: 14px;
+  overflow-x: hidden;
+  @include in-mobile() {
+    font-size: 16px;
+  }
 }
 
-nav {
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: $brand;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+button {
+  background: $brand;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  color: $grey-1;
+  text-transform: uppercase;
+  outline: 0;
+  border: 0;
+  border-radius: 6px;
+  height: 40px;
+  padding: 0 15px;
+  line-height: 40px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 2px 10px rgba(0,0,0,.2);
+    cursor: pointer;
+  }
+  &:active {
+    transform: translateY(-1px);
+    box-shadow: 0 1px 5px rgba(0,0,0,.2);
+    cursor: pointer;
+  }
+}
+.nav {
   display: flex;
-  float: right;
-  a, span {
-    margin: 10px 15px;
+  height: 60px;
+  padding: 0 60px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+
+  @include in-mobile() {
+    padding: 0 15px;
+  }
+
+  &__logo {
+    height: 40px;
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    @include in-mobile() {
+      display: none;
+    }
+  }
+
+  &__link {
+    margin: 0 10px;
+  }
+
+  &__mobile {
+    display: none;
+    @include in-mobile() {
+      display: block;
+    }
+  }
+
+  &__drawer {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: -80vw;
+    top: 0px;
+    height: 100vh;
+    width: 80vw;
+    background: $grey-1;
+    z-index: 100;
+    padding: 60px 15px;
+    font-size: 1.5rem;
+    transition: all 0.2s ease;
+    &-link {
+      & + & {
+        margin-top: 30px;
+      }
+    }
+    &--open {
+      right: 0px;
+    }
+  }
+
+  &__toggle {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    z-index: 200;
+    font-size: 1.5rem;
+    transition: all 0.2s ease;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

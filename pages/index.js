@@ -1,17 +1,31 @@
 import React from 'react';
 import getConfig from 'next/config';
+import _ from 'lodash';
 import languages from '../lang/index';
 import Nav from '../ui/components/Nav';
+import AuthConsumer from '../ui/components/Auth';
 import '../static/scss/pages/home.scss';
 
 const { publicRuntimeConfig } = getConfig();
-const { STATIC_PATH, CURRENT_LANG } = publicRuntimeConfig;
+const { CURRENT_LANG } = publicRuntimeConfig;
 const LANGUAGE = languages[CURRENT_LANG] || languages.EN;
 
 export default () => (
   <div className="home">
     <Nav />
-    <img src={`${STATIC_PATH}/static/images/logo.svg`} alt="Logo" />
-    <h1>{LANGUAGE.TITLE}</h1>
+    <AuthConsumer>
+      {
+        ({ user }) => (
+          <main className="home__main">
+            <h1>{LANGUAGE.TITLE}</h1>
+            {
+              _.isEmpty(user) ? (
+                <h2>Login for a personalized experiece</h2>
+              ) : (<h2>Hello {_.get(user, 'name')}</h2>)
+            }
+          </main>
+        )
+      }
+    </AuthConsumer>
   </div>
 );

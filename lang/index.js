@@ -1,11 +1,15 @@
 const languages = {
   EN: {
-    TITLE: 'Hello World',
+    TITLE: 'App name',
+    HELLO: 'Hello',
     LOGIN: 'Log In',
+    SETTINGS_TITLE: 'Settings',
   },
   ES: {
-    TITLE: 'Hola Mundo',
+    TITLE: 'App name',
+    HELLO: 'Hola',
     LOGIN: 'Log In',
+    SETTINGS_TITLE: 'Settings',
   },
 };
 

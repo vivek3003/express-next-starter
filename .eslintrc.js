@@ -39,6 +39,7 @@ module.exports = {
     "no-alert": 'off',
     "react/no-danger": 'off',
     "jsx-a11y/no-noninteractive-element-interactions": 'off',
-    "lines-between-class-members": 'off'
+    "lines-between-class-members": 'off',
+    'react/jsx-one-expression-per-line': 'off'
   },
 };
