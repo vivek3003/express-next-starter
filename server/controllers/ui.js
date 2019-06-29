@@ -7,6 +7,7 @@ const { setAuthenticationState, isAuthenticatedForPage } = require('../utils/aut
 module.exports = (nextApp, nextHandle) => {
   const uiRouter = express.Router();
 
+
   uiRouter.get('/', setAuthenticationState, (req, res) => nextApp.render(req, res, '/', req.query));
   uiRouter.get('/settings', isAuthenticatedForPage, (req, res) => nextApp.render(req, res, '/settings', req.query));
 

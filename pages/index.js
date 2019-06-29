@@ -21,7 +21,7 @@ export default () => (
             {
               _.isEmpty(user) ? (
                 <h2>Login for a personalized experiece</h2>
-              ) : (<h2>Hello {_.get(user, 'name')}</h2>)
+              ) : (<h2>Hello {_.get(user, 'name')}, You are now logged in.</h2>)
             }
           </main>
         )

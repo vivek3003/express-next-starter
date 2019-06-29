@@ -37,7 +37,6 @@ function createServer() {
   return app;
 }
 
-
 async function startDevServer() {
   try {
     nextApp.prepare().then(() => {

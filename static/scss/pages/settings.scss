@@ -1,0 +1,10 @@
+@import '../core/main.scss';
+
+.settings {
+  max-width: 1440px;
+  margin: 0 auto;
+
+  &__main {
+    padding: 60px;
+  }
+}

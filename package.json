@@ -1,7 +1,7 @@
 {
-  "name": "lit",
+  "name": "node-next-serverless",
   "version": "1.0.0",
-  "description": "backend for link-tok",
+  "description": "Project to get started with node nextjs development.",
   "main": "index.js",
   "scripts": {
     "dev": "ENV_FILE=.env.local pm2 --watch --no-daemon -f start server/index.js",
