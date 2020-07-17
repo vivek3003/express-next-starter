@@ -21,7 +21,7 @@
     "express": "^4.16.4",
     "js-cookie": "^2.2.0",
     "jsonwebtoken": "^8.5.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "morgan": "^1.9.1",
     "mysql2": "^1.6.5",
     "next": "^8.1.0",
